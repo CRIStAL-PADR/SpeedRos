@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# coding: utf-8
 """
     Copyright (C) 2021  CNRS
     This file is part of "Speedlib".
@@ -10,9 +12,6 @@
     in automatic mode, in three directions and exchanging with the information
     system for overall management
 """
-#!/usr/bin/env python3
-# coding: utf-8
-
 #======= Import ================
 import sys
 import rospy
@@ -23,7 +22,7 @@ from speedlib.cranes.faller import Crane
 class CranePiloteNode:
     """ Cette classe permet de créer un noeud ROS capable de piloter les grues
          avec ROS
-    """
+	"""
 
     def __init__(self, i_p="172.17.217.217"):
         """
