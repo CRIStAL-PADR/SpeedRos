@@ -6,83 +6,74 @@ import rospy
 from train.msg import train as train_message
 from speedlib.trains import dcc
 from speedlib.trains.dcc import Train
-
+import sys
+import signal
 
 def start_locomotive():
 	dcc.start()
 
-def stop_locomotive():
+def stop_controller(signal,frame):
 	dcc.stop()
-
-    
+	sys.exit(0)
+ 
 class TrainPiloteNode:
 
-	def __init__(self):
-		self.object = None
-		self.data = None
+	def __init__(self, num_train=3):
 		self.train = {}
-    
-
-	def train_init(self):
-		MAX_NUMBER = 3
-		for i in range(1, MAX_NUMBER):
+		for i in range(1, num_train):
 			self.train[i] = Train("DCC"+str(i), i)
-		
-
+    		
 	def callback(self, data):
-
 		print(data)
-		self.object = data
-		self.data = data
 		if not isinstance(data.train_name, str):
 			raise TypeError("train_name must be a str but got" +str(data.train_name))
 
 		if not isinstance(data.train_number, int):
 			raise TypeError(" train adress must be a str but got" +str(data.train_number))
-		if self.object.train_command == "faster":
-            		self.train[self.object.train_number].faster()
+		if data.train_command == "faster":
+            		self.train[data.train_number].faster()
 
-		if self.data.train_command == "slower":
+		if data.train_command == "slower":
 			self.train[self.object.train_number].slower()
 
-		if self.data.train_command == "speed" and self.data.speed_value !=0:
-			self.train[self.object.train_number].speed = self.object.speed_value
+		if data.train_command == "speed" and self.data.speed_value !=0:
+			self.train[data.train_number].speed = data.speed_value
         
-		if self.data.train_command == "reverse":
-			self.train[self.object.train_number].reverse()
+		if data.train_command == "reverse":
+			self.train[data.train_number].reverse()
         
-		if self.data.train_command == "f1":
-			self.train[self.object.train_number].f1 = self.object.accessories_value
+		if data.train_command == "f1":
+			self.train[data.train_number].f1 = data.accessories_value
         
-		if self.data.train_command == "f2":
-			self.train[self.object.train_number].f2 = self.object.accessories_value
+		if data.train_command == "f2":
+			self.train[data.train_number].f2 = data.accessories_value
 
-		if self.data.train_command == "f3":
-			self.train[self.object.train_number].f3 = self.object.accessories_value
+		if data.train_command == "f3":
+			self.train[data.train_number].f3 = data.accessories_value
     
-		if self.data.train_command == "f4":
-			self.train[self.object.train_number].f4 = self.object.accessories_value
+		if data.train_command == "f4":
+			self.train[data.train_number].f4 = data.accessories_value
 
-		if self.data.train_command == "fl":
-			self.train[self.object.train_number].fl = self.object.accessories_value 
+		if data.train_command == "fl":
+			self.train[data.train_number].fl = data.accessories_value 
 
-		if self.data.train_command == "train_info":
-			print(self.train[self.object.train_number])
+		if data.train_command == "train_info":
+			print(self.train[data.train_number])
+		
 
-
-	def listener(self):              
-	                                                                #je crée une variablee train qui va pointer vers une zone mémoire ou j'initialise un 													doctionnaire vide
-		self.train_init() 							  #J'initialise tous les trains et je fais pointer la variable train crée précédement 													vers la  zone mémoire pointer par la fonction
-
-		rospy.init_node('listener', anonymous=True)				
-
-		rospy.Subscriber("train/command", train_message, self.callback) 
-
-		rospy.spin()
-
+	
 if __name__=='__main__':
 
-	start_locomotive() # j'excécute la fonction start_locomotive
-	train = TrainPiloteNode() # j'instancie un objet de type trainPiloteNode et je fais pointer la variable train vers la zone mémoir eou se trouve l'objet instancié
-	train.listener() # J
-	stop_locomotive()
+	dcc.start() # j'excécute la fonction start_locomotive
+	trainnode = TrainPiloteNode()						
+	rospy.init_node('toto', anonymous=True)
+	print("Initialisation du noeud")
+	rospy.Subscriber("train/command", train_message, trainnode.callback)
+	
+	signal.signal(signal.SIGINT,stop_controller)
+
+	rospy.spin()
+	
+
+
+
