@@ -1,0 +1,5 @@
+string switch_command
+string switch_name
+int8 switch_number
+int8 biais_state
+int64 biais_id
