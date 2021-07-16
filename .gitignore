@@ -2,3 +2,6 @@
 build/
 devel/
 src/CMakeLists.txt
+install/
+src/switch/src/.switch_pilot.py.swp
+
