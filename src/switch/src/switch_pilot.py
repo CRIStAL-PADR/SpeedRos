@@ -57,7 +57,7 @@ class SwitchPiloteNode:
             self.switch[data.switch_address].biais = [data.biais_id ,data.biais_state]
         
         if data.switch_command == "biais_info":
-            print(self.switch[data.switch_address])
+            print(self.switch[data.switch_address].biais)
 
 if __name__=='__main__':
 
