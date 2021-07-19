@@ -20,8 +20,9 @@ from speedlib.cranes import faller
 from speedlib.cranes.faller import Crane
 
 class CranePiloteNode:
-    """ Cette classe permet de créer un noeud ROS capable de piloter les grues
-         avec ROS
+    """ 
+        This class is used to create a ROS node capable of controlling cranes
+        with ROS
 	"""
 
     def __init__(self, i_p="172.17.217.217"):
@@ -30,6 +31,7 @@ class CranePiloteNode:
         ----------
         i_p : TYPE, optional
             DESCRIPTION. The default is "172.17.217.217".
+            It corresponds to the ip address of the crane
 
         Returns
         -------
@@ -47,7 +49,8 @@ class CranePiloteNode:
         Parameters
         ----------
         data :  crane.msg
-            DESCRIPTION : C'est largument de la fonction callback contenant les messages
+            DESCRIPTION : It is the argument of the callback function containing 
+            the messages
 
         Returns
         -------
