@@ -15,7 +15,7 @@
 
 #======= Import ================
 import rospy
-from train.msg import train as train_message
+from std_msgs.msgs import String
 from speedlib import dcc
 from speedlib.dcc import dcc_object, dcc_trains
 from speedlib.dcc.dcc_object import DCCObject
@@ -36,9 +36,9 @@ class TrainPiloteNode:
 		  trains with ROS
 	"""
 
-	def __init__(self, num_train=3):
+	def __init__(self, num_train=3, start = 1):
         """
-	    
+
 
 	    Parameters
 	    ----------
@@ -46,50 +46,58 @@ class TrainPiloteNode:
 	        DESCRIPTION. The default is 3.
             It corresponds to the number of train to initialize when calling the constructor
             when a train node is created
+
+        start : int, Optional
+            DESCRIPTION. The default is 1.
+            It corresponds to the number of the first train
 	    Returns
 	    -------
 	    None.
 
 	    """
 		self.train = {}
-		for i in range(1, num_train):
+		for i in range(start, num_train):
 			self.train[i] = Train("DCC"+str(i), i)
 
+    def process_data(self, data):
+        data_split = data.split(";")
+        data_dict = {}
+        for i in range(len(data_split) + 1):
+            buffer = data_split[i].split(":")
+            data_dict[buffer[0]] = buffer[1]
+
+        return data_dict
+
 	def callback(self, data):
-		if not isinstance(data.train_name, str):
-			raise TypeError("train_name must be a str but got" +str(data.train_name))
 
-		if not isinstance(data.train_number, int):
-			raise TypeError(" train adress must be a str but got" +str(data.train_number))
-		if data.train_command == "faster":
-            		self.train[data.train_number].faster()
+        command = self.process_data(data)
 
-		if data.train_command == "slower":
-			self.train[self.object.train_number].slower()
+		if command["train_command"] == "faster":
+            self.train[int(command["train_number"])].faster()
 
-		if data.train_command == "speed" and self.data.speed_value !=0:
-			self.train[data.train_number].speed = data.speed_value
+		if command["train_command"] == "slower":
+			self.train[int(command["train_number"])].slower()
 
-		if data.train_command == "reverse":
-			self.train[data.train_number].reverse()
+		if command["train_command"] == "speed" and self.data.speed_value !=0:
+			self.train[int(command["train_number"])].speed = int(command["speed_value"])
 
-		if data.train_command == "f1":
-			self.train[data.train_number].f1 = data.accessories_value
+		if command["train_command"] == "reverse":
+			self.train[int(command["train_number"])].reverse()
 
-		if data.train_command == "f2":
-			self.train[data.train_number].f2 = data.accessories_value
+		if command["train_command"] == "f1":
+			self.train[int(command["train_number"])].f1 = command["accessories_value"]
 
-		if data.train_command == "f3":
-			self.train[data.train_number].f3 = data.accessories_value
+		if command["train_command"] == "f2":
+			self.train[int(command["train_number"])].f2 = command["accessories_value"]
 
-		if data.train_command == "f4":
-			self.train[data.train_number].f4 = data.accessories_value
+		if command["train_command"] == "f3":
+			self.train[int(command["train_number"])].f3 = command["accessories_value"]
 
-		if data.train_command == "fl":
-			self.train[data.train_number].fl = data.accessories_value
+		if command["train_command"] == "f4":
+			self.train[int(command["train_number"])].f4 = command["accessories_value"]
 
-		if data.train_command == "train_info":
-			print(self.train[data.train_number])
+		if command["train_command"] == "fl":
+			self.train[int(command["train_number"])].fl = command["accessories_value"]
 
 
 
@@ -99,7 +107,7 @@ if __name__=='__main__':
 	trainnode = TrainPiloteNode()
 	rospy.init_node('train', anonymous=True)
 	print("Initialisation du noeud")
-	rospy.Subscriber("train/command", train_message, trainnode.callback)
+	rospy.Subscriber("train/command", String, trainnode.callback)
 
 	signal.signal(signal.SIGINT,stop_controller)
 
