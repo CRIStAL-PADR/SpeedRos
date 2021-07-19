@@ -31,14 +31,31 @@ def stop_controller(signal,frame):
 	sys.exit(0)
 
 class TrainPiloteNode:
+	"""
+		 This class is used to create a ROS node capable of controlling
+		  trains with ROS
+	"""
 
 	def __init__(self, num_train=3):
+        """
+	    
+
+	    Parameters
+	    ----------
+	    num_train : int, optional
+	        DESCRIPTION. The default is 3.
+            It corresponds to the number of train to initialize when calling the constructor
+            when a train node is created
+	    Returns
+	    -------
+	    None.
+
+	    """
 		self.train = {}
 		for i in range(1, num_train):
 			self.train[i] = Train("DCC"+str(i), i)
 
 	def callback(self, data):
-		print(data)
 		if not isinstance(data.train_name, str):
 			raise TypeError("train_name must be a str but got" +str(data.train_name))
 
