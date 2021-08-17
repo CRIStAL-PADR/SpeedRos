@@ -18,7 +18,7 @@
 import sys
 import signal
 import rospy
-from switch.msg import switch as switch_message
+from std_msgs.msgs import String
 from speedlib.dcc import dcc_object, dcc_switches
 from speedlib.dcc.dcc_object import DCCObject
 from speedlib.dcc.dcc_switches import Switch
