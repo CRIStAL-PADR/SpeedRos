@@ -72,28 +72,28 @@ class TrainPiloteNode:
 		if command["train_command"] == "faster":
 			self.train[int(command["train_number"])].faster()
 
-		if command["train_command"] == "slower":
+		elif command["train_command"] == "slower":
 			self.train[int(command["train_number"])].slower()
 
-		if command["train_command"] == "speed" and self.data.speed_value !=0:
+		elif command["train_command"] == "speed" and self.data.speed_value !=0:
 			self.train[int(command["train_number"])].speed = int(command["speed_value"])
 
-		if command["train_command"] == "reverse":
+		elif command["train_command"] == "reverse":
 			self.train[int(command["train_number"])].reverse()
 
-		if command["train_command"] == "f1":
+		elif command["train_command"] == "f1":
 			self.train[int(command["train_number"])].f1 = command["accessories_value"]
 
-		if command["train_command"] == "f2":
+		elif command["train_command"] == "f2":
 			self.train[int(command["train_number"])].f2 = command["accessories_value"]
 
-		if command["train_command"] == "f3":
+		elif command["train_command"] == "f3":
 			self.train[int(command["train_number"])].f3 = command["accessories_value"]
 
-		if command["train_command"] == "f4":
+		elif command["train_command"] == "f4":
 			self.train[int(command["train_number"])].f4 = command["accessories_value"]
 
-		if command["train_command"] == "fl":
+		elif command["train_command"] == "fl":
 			self.train[int(command["train_number"])].fl = command["accessories_value"]
 
 
