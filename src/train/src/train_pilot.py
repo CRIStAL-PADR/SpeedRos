@@ -59,7 +59,7 @@ class TrainPiloteNode:
 
 	def process_data(self, data):
 		data_split = data.split(";")
-		data_dict = {}
+		data_dict = {} 
 		for i in range(len(data_split) + 1):
 			buffer = data_split[i].split(":")
     		data_dict[buffer[0]] = buffer[1]
