@@ -15,7 +15,7 @@
 
 #======= Import ================
 import rospy
-from std_msgs.msgs import String
+from std_msgs.msg import String
 from speedlib import dcc
 from speedlib.dcc import dcc_object, dcc_trains
 from speedlib.dcc.dcc_object import DCCObject
@@ -59,15 +59,15 @@ class TrainPiloteNode:
 
 	def process_data(self, data):
 		data_split = data.split(";")
+		print("data_split : ", data_split)
 		data_dict = {} 
-		for i in range(len(data_split) + 1):
+		for i in range(len(data_split)):
 			buffer = data_split[i].split(":")
-    		data_dict[buffer[0]] = buffer[1]
+			data_dict[buffer[0].strip()] = buffer[1].strip()
 		return data_dict
 
 	def callback(self, data):
-
-		command = self.process_data(data)
+		command = self.process_data(data.data)
 
 		if command["train_command"] == "faster":
 			self.train[int(command["train_number"])].faster()
@@ -101,7 +101,7 @@ class TrainPiloteNode:
 if __name__=='__main__':
 
 	start_controller() # j'excécute la fonction start_locomotive
-	trainnode = TrainPiloteNode()
+	trainnode = TrainPiloteNode(int(sys.argv[1]), int(sys.argv[2]))
 	rospy.init_node('train', anonymous=True)
 	print("Initialisation du noeud")
 	rospy.Subscriber("train/command", String, trainnode.callback)
