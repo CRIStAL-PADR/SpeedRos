@@ -18,7 +18,7 @@
 import sys
 import signal
 import rospy
-from std_msgs.msgs import String
+from std_msgs.msg import String
 from speedlib.dcc import dcc_object, dcc_switches
 from speedlib.dcc.dcc_object import DCCObject
 from speedlib.dcc.dcc_switches import Switch
@@ -33,40 +33,43 @@ def stop_controller(signal, frame):
 
 class SwitchPiloteNode:
     
-    def __init__(self, num_switch):
-        self.switch ={}
-        for i in range(1, num_switch+1):
-            self.switch[i] = Switch("DCC"+str(i), i)
-    
-    def callback(self, data):
-        print(data)
+	def __init__(self, num_switch, start):
+		self.switch ={}
+		for i in range(start, num_switch+1):
+			self.switch[i] = Switch("DCC"+str(i), i)
+		self.switch_adress_and_command = {}
+		self.biais_number_and_state = {}
+		
+		
+	def process_data(self, data):
+		data_split = data.split(";")
+		print("data_split : ", data_split)
+		data_dict = {} 
+		for i in range(len(data_split)):
+			buffer = data_split[i].split(":")
+			data_dict[buffer[0].strip()] = buffer[1].strip()
+		return data_dict
 
-        if not isinstance(data.switch_name, str):
-            raise TypeError("Switch_name must be a str but got "+str(data.switch_name))
-        
-        if not isinstance(data.switch_address, int):
-            raise TypeError("Switch_address must be an int but got "+str(data.switch_address))
+	def callback(self, data):
+		
+		command = self.process_data(data.data)
 
-        if not isinstance(data.biais_id, int):
-            raise TypeError("biais_id  be a int but got "+str(data.biais_id))
+		if int(command["biais_id"]) not in [1, 2]:
+			raise ValueError("biais_id must be 1 or 2 but got :" +str(int(command["biais_id"])))
         
-        if data.biais_id not in [1, 2]:
-            raise ValueError("biais_id must be 1 or 2 but got :" +str(data.biais_id))
-        
-        if data.switch_command == "biais":
-            self.switch[data.switch_address].biais = [data.biais_id ,data.biais_state]
-        
-        if data.switch_command == "biais_info":
-            print(self.switch[data.switch_address].biais)
+		if command["switch_command"] == "biais":
+			self.switch[int(command["switch_number"])].biais = [int(command["biais_id"]), bool(command["biais_state"])]
+		
+		if command["switch_command"] == "biais_info":
+			print(self.switch[int(command["switch_number"])].biais)
 
 if __name__=='__main__':
 
    start_controller()
-   print(type(sys.argv[1]))
-   switchnode = SwitchPiloteNode(int(sys.argv[1]))
+   switchnode = SwitchPiloteNode(int(sys.argv[1]), int(sys.argv[2]))
    rospy.init_node('switch', anonymous=True)
    print("Initialisation du noeud")
-   rospy.Subscriber("switch/command", switch_message, switchnode.callback)
+   rospy.Subscriber("switch/command", String, switchnode.callback)
 
    signal.signal(signal.SIGINT,stop_controller)
 
