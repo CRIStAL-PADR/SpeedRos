@@ -36,11 +36,9 @@ class TrainPiloteNode:
 		  trains with ROS
 	"""
 
-	def __init__(self, num_train=3, start = 1):
-        """
-
-
-	    Parameters
+	def __init__(self, numbof_train=3, start = 1):
+		"""
+        Parameters
 	    ----------
 	    num_train : int, optional
 	        DESCRIPTION. The default is 3.
@@ -56,24 +54,23 @@ class TrainPiloteNode:
 
 	    """
 		self.train = {}
-		for i in range(start, num_train):
+		for i in range(start, numbof_train):
 			self.train[i] = Train("DCC"+str(i), i)
 
-    def process_data(self, data):
-        data_split = data.split(";")
-        data_dict = {}
-        for i in range(len(data_split) + 1):
-            buffer = data_split[i].split(":")
-            data_dict[buffer[0]] = buffer[1]
-
-        return data_dict
+	def process_data(self, data):
+		data_split = data.split(";")
+		data_dict = {}
+		for i in range(len(data_split) + 1):
+			buffer = data_split[i].split(":")
+    		data_dict[buffer[0]] = buffer[1]
+		return data_dict
 
 	def callback(self, data):
 
-        command = self.process_data(data)
+		command = self.process_data(data)
 
 		if command["train_command"] == "faster":
-            self.train[int(command["train_number"])].faster()
+			self.train[int(command["train_number"])].faster()
 
 		if command["train_command"] == "slower":
 			self.train[int(command["train_number"])].slower()
