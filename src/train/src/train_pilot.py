@@ -18,7 +18,6 @@ import sys
 import signal
 import rospy
 from std_msgs.msg import String
-from speedlib import dcc
 from speedlib.dcc import dcc_object
 from speedlib.dcc .dcc_trains import Train
 
@@ -86,13 +85,13 @@ class TrainPiloteNode:
 
 	def callback(self, data):
 		"""
-	    This method is called when an message arrives on the node
+	    This method is called when a message arrives on the node
 
 	    Parameters
 	    ----------
 	    data : string
         """
-		
+
 		command = self.process_data(data.data)
 
 		if command["train_command"] == "faster":
