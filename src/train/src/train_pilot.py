@@ -24,9 +24,16 @@ import sys
 import signal
 
 def start_controller():
+    """
+    Starts the controller
+    """
 	dcc_object.start()
 
 def stop_controller(signal,frame):
+    """
+    Stops the controller when the user presses 
+    control c
+    """
 	dcc_object.stop()
 	sys.exit(0)
 
@@ -36,17 +43,17 @@ class TrainPiloteNode:
 		  trains with ROS
 	"""
 
-	def __init__(self, numbof_train=3, start = 1):
+	def __init__(self, numbof_train, start):
 		"""
         Parameters
 	    ----------
-	    num_train : int, optional
-	        DESCRIPTION. The default is 3.
+	    num_train : int
+	        DESCRIPTION.
             It corresponds to the number of train to initialize when calling the constructor
             when a train node is created
 
-        start : int, Optional
-            DESCRIPTION. The default is 1.
+        start : int
+            DESCRIPTION
             It corresponds to the number of the first train
 	    Returns
 	    -------
