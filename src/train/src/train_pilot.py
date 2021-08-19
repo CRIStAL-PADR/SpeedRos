@@ -14,26 +14,26 @@
 """
 
 #======= Import ================
+import sys
+import signal
 import rospy
 from std_msgs.msg import String
 from speedlib import dcc
-from speedlib.dcc import dcc_object, dcc_trains
-from speedlib.dcc.dcc_object import DCCObject
+from speedlib.dcc import dcc_object
 from speedlib.dcc .dcc_trains import Train
-import sys
-import signal
+
 
 def start_controller():
-    """
-    Starts the controller
-    """
+	"""
+	Starts the controller
+	"""
 	dcc_object.start()
 
 def stop_controller(signal,frame):
-    """
-    Stops the controller when the user presses 
-    control c
-    """
+	"""
+	Stops the controller when the user presses
+	control c
+	"""
 	dcc_object.stop()
 	sys.exit(0)
 
@@ -48,12 +48,10 @@ class TrainPiloteNode:
         Parameters
 	    ----------
 	    num_train : int
-	        DESCRIPTION.
-            It corresponds to the number of train to initialize when calling the constructor
+            It corresponds to the number of train to initialize when
             when a train node is created
 
         start : int
-            DESCRIPTION
             It corresponds to the number of the first train
 	    Returns
 	    -------
@@ -65,6 +63,20 @@ class TrainPiloteNode:
 			self.train[i] = Train("DCC"+str(i), i)
 
 	def process_data(self, data):
+		"""
+        Get the command in the form of a string sent by the user and transform it
+        in dictionary which will be used in by the callback method in order to execute the
+        corresponding command
+
+	    Parameters
+	    ----------
+	    data : String
+	        Command send by the user
+	    Returns
+	    -------
+	    data_dict : dict
+	        Command return after processing
+        """
 		data_split = data.split(";")
 		data_dict = {} 
 		for i in range(len(data_split)):
@@ -73,6 +85,14 @@ class TrainPiloteNode:
 		return data_dict
 
 	def callback(self, data):
+		"""
+	    This method is called when an message arrives on the node
+
+	    Parameters
+	    ----------
+	    data : string
+        """
+		
 		command = self.process_data(data.data)
 
 		if command["train_command"] == "faster":

@@ -90,7 +90,7 @@ class SwitchPiloteNode:
 
     def callback(self, data):
         """
-	    This method is called when an message arrives on the node
+	    This method is called when a message arrives on the node
 
 	    Parameters
 	    ----------
