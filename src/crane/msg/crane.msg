@@ -1,4 +1,0 @@
-string crane_command
-int64 values
-string motors_name
-string motors_direction
