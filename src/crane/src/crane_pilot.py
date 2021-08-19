@@ -15,7 +15,7 @@
 #======= Import ================
 import sys
 import rospy
-from crane.msg import crane as crane_message
+from std_msgs.msg import String
 from speedlib.cranes import faller
 from speedlib.cranes.faller import Crane
 
@@ -32,17 +32,34 @@ class CranePiloteNode:
         i_p : TYPE, optional
             DESCRIPTION. The default is "172.17.217.217".
             It corresponds to the ip address of the crane
-
-        Returns
-        -------
-        None.
-
         """
         self.i_p = i_p
         self.crane = Crane()
         self.crane.init(self.i_p)
         self.motors = {"MotorCrab": 1, "MotorSpreader": 3, "MotorChassis" : 2}
         self.motors_direction = {"MotorDirectionForward": 1, "MotorDirectionBackward":-1}
+
+    def process_data(self, data):
+        """
+        Get the command in the form of a string sent by the user and transform it
+        in dictionary which will be used in by the callback method in order to execute the
+        corresponding command
+	    Parameters
+	    ----------
+	    data : String
+	        Command send by the user
+	    Returns
+	    -------
+	    data_dict : dict
+	        Command return after processing
+        """
+        data_split = data.split(";")
+        print("data_split : ", data_split)
+        data_dict = {}
+        for i in range(len(data_split)):
+            buffer = data_split[i].split(":")
+            data_dict[buffer[0].strip()] = buffer[1].strip()
+        return data_dict
 
     def callback(self,data):
         """
@@ -57,24 +74,25 @@ class CranePiloteNode:
         None.
 
         """
+        command = self.process_data(data.data)
 
-        if data.crane_command not in ["start", "stop", "step", "start_for",
+        if command["crane_command"] not in ["start", "stop", "step", "start_for",
                                       "battery", "change_speed", "get_speed", "set_speed"]:
             raise RuntimeError("Erreur dans la commande adressé au moteur : "+
-                               str(data.crane_command))
+                               str(command["crane_command"])
 
-        if data.motors_name not in ["MotorChassis", "MotorSpreader", "MotorCrab"]:
+        if command["motors_name"] not in ["MotorChassis", "MotorSpreader", "MotorCrab"]:
             raise RuntimeError("""motors_name must be MotorChassis, MotorSpreader,
-                               MotorCrab but got """+str(data.motors_name))
+                               MotorCrab but got """+str(command["motors_name"])
 
-        if not isinstance(data.values, int):
-            raise TypeError("data.values must be an integer but got :"+str(data.values))
+        if not isinstance(int(command["values"]), int):
+            raise TypeError("data.values must be an integer but got :"+str(command["values"]))
 
-        if data.motors_direction not in ["MotorDirectionBackward", "MotorDirectionForward"]:
+        if command["motors_direction"] not in ["MotorDirectionBackward", "MotorDirectionForward"]:
             raise RuntimeError("""motor direction must be MotorDirectionForward or
-                               MotorDirectionBackward but got """+str(data.motors_direction))
+                               MotorDirectionBackward but got """+str(command["motors_direction"]))
 
-        if data.crane_command == "start":
+        """if data.crane_command == "start":
             self.crane.start(self.motors[data.motors_name],
                              self.motors_direction[data.motors_direction])
 
@@ -99,7 +117,7 @@ class CranePiloteNode:
             print(self.crane.get_speed(self.motors[data.motors_name]))
 
         elif data.crane_command == "set_speed":
-            print(self.crane.set_speed(self.motors[data.motors_name], data.values))
+            print(self.crane.set_speed(self.motors[data.motors_name], data.values))"""
 
 
 
@@ -109,6 +127,7 @@ if __name__=='__main__':
                                ip address, the message and the command""")
 
     cranenode = CranePiloteNode(sys.argv[1])
+    print("Initialisation du noeud")
     rospy.init_node(sys.argv[2], anonymous=True)
-    rospy.Subscriber(sys.argv[3], crane_message, cranenode.callback)
+    rospy.Subscriber(sys.argv[3], String, cranenode.callback)
     rospy.spin()
