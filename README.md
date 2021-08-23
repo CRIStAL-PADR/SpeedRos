@@ -47,14 +47,14 @@ Open a second terminal and run the following command:
  * rosrun crane crane_pilotpy "172.17.217.217"
 
 Open a third terminal and run the following command: 
- * rostopic pub /crane/command std_msgs/String " data : ''"
+ * rostopic pub /crane/command std_msgs/String " data : '' "
 
 ### Example
 For the start_for method here is the command:
- >>> rostopic pub /crane/command std_msgs/String " data : ' crane_command : start_for; value : 5; motors_name : MotorChassis; motors_direction : MotorDirectionForward'"
+ >>> rostopic pub /crane/command std_msgs/String " data : ' crane_command : start_for; value : 5; motors_name : MotorChassis; motors_direction : MotorDirectionForward' "
 
 For the set_speed method here is the command: : 
- >>> rostopic pub /crane/command std_msgs/String " data : ' crane_command : set_speed; speed_value : 5; motors_name : MotorChassis'"
+ >>> rostopic pub /crane/command std_msgs/String " data : ' crane_command : set_speed; speed_value : 5; motors_name : MotorChassis' "
 
 ## Controlling a DCC train and switch model
 
@@ -74,17 +74,17 @@ The first parameter is the number of train that we want to initialize.
 The second parameter designates the address or number of the first train to be initialized
 
 Open a third terminal and run the following command: 
- * rostopic pub /train/command std_msgs/String " data : ''"
+ * rostopic pub /train/command std_msgs/String " data : '' "
 
 #### Example
 For the faster method here is the command:
- >>> rostopic pub /train/command std_msgs/String " data : 'train_command : faster; train_number : 3'"
+ >>> rostopic pub /train/command std_msgs/String " data : 'train_command : faster; train_number : 3' "
 
 For the speed methode here is the command : 
- >>> rostopic pub /train/command std_msgs/String " data : 'train_command : speed; train_number : 5; speed_value : 15'"
+ >>> rostopic pub /train/command std_msgs/String " data : 'train_command : speed; train_number : 5; speed_value : 15' "
 
 For the fl methode here is the command:
- >>> rostopic pub /train/command std_msgs/String " data : 'train_command : fl; train_number : 5; accessories_value : True'"
+ >>> rostopic pub /train/command std_msgs/String " data : 'train_command : fl; train_number : 5; accessories_value : True' "
 
 ### Switch
 Open a terminal and run the following command: 
@@ -97,14 +97,14 @@ The first parameter is the number of switch that we want to initialize.
 The second parameter designates the address or number of the first switch to be initialized
 
 Open a third terminal and run the following command: 
- * rostopic pub /switch/command std_msgs/String " data : ''"
+ * rostopic pub /switch/command std_msgs/String " data : '' "
 
 #### Example
 For the biais method here is the command:
- >>> rostopic pub /switch/command std_msgs/String " data : 'switch_command : biais; switch_number : 6; biais_id : 1; biais_state : True'"
+ >>> rostopic pub /switch/command std_msgs/String " data : 'switch_command : biais; switch_number : 6; biais_id : 1; biais_state : True' "
 
 To print information about the switch her is the command : 
- >>> rostopic pub /switch/command std_msgs/String " data : 'switch_command : biais_info; switch_number : 6'"
+ >>> rostopic pub /switch/command std_msgs/String " data : 'switch_command : biais_info; switch_number : 6' "
 
 ## For the debugging
 Usually we can use the tab to help us enter the ros command lines.
