@@ -57,11 +57,22 @@ Pour méthode start_for voici la commande :
 Pour la méthode set_speed voici la commande : 
  >>> rostopic pub /crane/command std_msgs/String " data : ' crane_command : set_speed; speed_value : 5; motors_name : MotorChassis'"
 
- Controlling a DCC train and switch model
-#
+# Controlling a DCC train and switch model
+
 You must first be an administrator to be able to control the train or the switch because of the *wiringPiSetup*
  * sudo su
 
 Il est également indispendable de sourcer le setup file (see *Building a SpeedRos workspace and sourcing the setup file*)
 
 ## Train
+Open a terminal and run the following command: 
+ * roscore
+
+Open a second terminal and run the following command: 
+ * rosrun train train_pilotpy 8 3
+
+The first parameter is the number of train that we want to initialize.
+The second parameter designates the address or number of the first train to be initialized
+
+Open a third terminal and run the following command: 
+ * rostopic pub /train/command std_msgs/String " data : ''"
