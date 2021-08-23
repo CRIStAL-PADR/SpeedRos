@@ -19,8 +19,8 @@ Hardware requirements
  * Same as for speedlib see : [speedlib Hardware requirements](https://cristal-padrspeed.readthedocs.io/en/latest/documentation.html#hardware-requirements)
 
 
-Prerequisite
-------------
+Building a SpeedRos workspace and sourcing the setup file
+-------------------------------------------------------
  * Knowing how to use ROS
 
 Before starting, it is imperative to create a local working directory in which to clone the remote repository of [SpeedROS](https://github.com/CRIStAL-PADR/SpeedRos) .
@@ -39,5 +39,20 @@ Once it's done we can now control our devices
 
 Controlling a Faller (c) crane model using ROS
 ----------------------------------------------
+You must first check that you are connected to the faller's wifi.
 
+Open a terminal and run the following command: 
+ * roscore
 
+Open a second terminal and run the following command: 
+ * rosrun crane crane_pilotpy "172.17.217.217"
+
+Open a third terminal and run the following command: 
+ * rostopic pub /crane/command std_msgs/String " data : ''"
+
+## Example
+Pour méthode start_for voici la commande : 
+ >>> rostopic pub /crane/command std_msgs/String " data : ' crane_command : start_for; value : 5; motors_name : MotorChassis; motors_direction : MotorDirectionForward'"
+
+Pour la méthode set_speed voici la commande : 
+ >>> rostopic pub /crane/command std_msgs/String " data : ' crane_command : set_speed; speed_value : 5; motors_name : MotorChassis'"
