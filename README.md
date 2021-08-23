@@ -23,10 +23,8 @@ Prerequisite
 ------------
  * Knowing how to use ROS
 
-Examples
-^^^^^^^^ 
-- Before starting, it is imperative to create a local working directory in which to clone the remote repository of [SpeedROS](https://github.com/CRIStAL-PADR/SpeedRos) .
-- Once it's done, you have to build the packages in the SpeedRos workspace :
+Before starting, it is imperative to create a local working directory in which to clone the remote repository of [SpeedROS](https://github.com/CRIStAL-PADR/SpeedRos) .
+Once it's done, you have to build the packages in the SpeedRos workspace :
     $ cd ~/SpeedRos
     $ catkin_make
 Once the workspace was built, it created a similar structure in the devel subfolder which you usually find under / opt / ros / $ ROSDISTRO_NAME
