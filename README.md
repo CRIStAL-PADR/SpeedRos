@@ -25,11 +25,17 @@ Prerequisite
 
 Before starting, it is imperative to create a local working directory in which to clone the remote repository of [SpeedROS](https://github.com/CRIStAL-PADR/SpeedRos) .
 Once it's done, you have to build the packages in the SpeedRos workspace :
-    $ cd ~/SpeedRos
-    $ catkin_make
+ * $ cd ~/.../SpeedRos
+ * $ catkin_make
 Once the workspace was built, it created a similar structure in the devel subfolder which you usually find under / opt / ros / $ ROSDISTRO_NAME
 
+To add the workspace to your ROS environment you need to source the generated setup file:
+ * $ source ~/.../SpeedRos/devel/setup.bash
 
+It should be noted that this will only work for cranes. In order to correctly source the generated setup file, because of the *wiringPi* used to control the trains and the switches, you must be in sudo :
+ * $ sudo su
+
+Once it's done we can now control our devices
 
 Controlling a Faller (c) crane model using ROS
 ----------------------------------------------
