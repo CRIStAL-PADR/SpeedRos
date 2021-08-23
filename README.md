@@ -16,8 +16,7 @@ Software requirements
 
 Hardware requirements
 ---------------------
- * Same as for speedlib see : [speedlib Hardware requirements](https://cristal-padrspeed.readthedocs.io/en/latest/documentation.html#hardware-requirements)
-
+ * Same for speedlib see : [speedlib Hardware requirements](https://cristal-padrspeed.readthedocs.io/en/latest/documentation.html#hardware-requirements)
 
 Building a SpeedRos workspace and sourcing the setup file
 -------------------------------------------------------
@@ -37,8 +36,8 @@ It should be noted that this will only work for cranes. In order to correctly so
 
 Once it's done we can now control our devices
 
-Controlling a Faller (c) crane model using ROS
-----------------------------------------------
+## Controlling a Faller (c) crane model using ROS
+
 You must first check that you are connected to the faller's wifi.
 
 Open a terminal and run the following command: 
@@ -101,5 +100,20 @@ Open a third terminal and run the following command:
  * rostopic pub /switch/command std_msgs/String " data : ''"
 
 #### Example
+For the biais method here is the command:
+ >>> rostopic pub /switch/command std_msgs/String " data : 'switch_command : biais; switch_number : 6; biais_id : 1; biais_state : True'"
 
+To print information about the switch her is the command : 
+ >>> rostopic pub /switch/command std_msgs/String " data : 'switch_command : biais_info; switch_number : 6'"
+
+## For the debugging
+Usually we can use the tab to help us enter the ros command lines.
+However, sometimes the tab does not work. This can be due to 2 potential errors:
+* the node file is not an executable. To correct this, just write in the terminal: *chmod + x file.py*
+* the Setup file is not well sourced.
+
+We can also use a debugging command to find out if the ros node that we have launched has been properly initialized
+* roswtf
+
+This command allows you to know which ros nodes are running on the machine.
 
