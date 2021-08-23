@@ -51,20 +51,20 @@ Open a third terminal and run the following command:
  * rostopic pub /crane/command std_msgs/String " data : ''"
 
 ### Example
-Pour méthode start_for voici la commande : 
+For the start_for method here is the command:
  >>> rostopic pub /crane/command std_msgs/String " data : ' crane_command : start_for; value : 5; motors_name : MotorChassis; motors_direction : MotorDirectionForward'"
 
-Pour la méthode set_speed voici la commande : 
+For the set_speed method here is the command: : 
  >>> rostopic pub /crane/command std_msgs/String " data : ' crane_command : set_speed; speed_value : 5; motors_name : MotorChassis'"
 
-# Controlling a DCC train and switch model
+## Controlling a DCC train and switch model
 
 You must first be an administrator to be able to control the train or the switch because of the *wiringPiSetup*
  * sudo su
 
 Il est également indispendable de sourcer le setup file (see *Building a SpeedRos workspace and sourcing the setup file*)
 
-## Train
+### Train
 Open a terminal and run the following command: 
  * roscore
 
@@ -76,3 +76,30 @@ The second parameter designates the address or number of the first train to be i
 
 Open a third terminal and run the following command: 
  * rostopic pub /train/command std_msgs/String " data : ''"
+
+#### Example
+For the faster method here is the command:
+ >>> rostopic pub /train/command std_msgs/String " data : 'train_command : faster; train_number : 3'"
+
+For the speed methode here is the command : 
+ >>> rostopic pub /train/command std_msgs/String " data : 'train_command : speed; train_number : 5; speed_value : 15'"
+
+For the fl methode here is the command:
+ >>> rostopic pub /train/command std_msgs/String " data : 'train_command : fl; train_number : 5; accessories_value : True'"
+
+### Switch
+Open a terminal and run the following command: 
+ * roscore
+
+Open a second terminal and run the following command: 
+ * rosrun switch switch_pilot.py 8 3
+
+The first parameter is the number of switch that we want to initialize.
+The second parameter designates the address or number of the first switch to be initialized
+
+Open a third terminal and run the following command: 
+ * rostopic pub /switch/command std_msgs/String " data : ''"
+
+#### Example
+
+
