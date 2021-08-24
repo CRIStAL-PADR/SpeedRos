@@ -65,7 +65,7 @@ class SwitchPiloteNode:
         self.switch_adress_and_command = {}
         self.biais_number_and_state = {}
 
-    def str2bool(v):
+    def str2bool(self, v):
         return v.lower() in ("true")
 
     def process_data(self, data):

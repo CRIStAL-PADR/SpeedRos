@@ -61,7 +61,7 @@ class TrainPiloteNode:
 		for i in range(start, numbof_train):
 			self.train[i] = Train("DCC"+str(i), i)
 
-	def str2bool(v):
+	def str2bool(self,v):
   		return v.lower() in ("true")
 
 	def process_data(self, data):
