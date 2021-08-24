@@ -107,19 +107,19 @@ class TrainPiloteNode:
 			self.train[int(command["train_number"])].reverse()
 
 		elif command["train_command"] == "f1":
-			self.train[int(command["train_number"])].f1 = command["accessories_value"]
+			self.train[int(command["train_number"])].f1 = bool(command["accessories_value"])
 
 		elif command["train_command"] == "f2":
-			self.train[int(command["train_number"])].f2 = command["accessories_value"]
+			self.train[int(command["train_number"])].f2 = bool(command["accessories_value"])
 
 		elif command["train_command"] == "f3":
-			self.train[int(command["train_number"])].f3 = command["accessories_value"]
+			self.train[int(command["train_number"])].f3 = bool(command["accessories_value"])
 
 		elif command["train_command"] == "f4":
-			self.train[int(command["train_number"])].f4 = command["accessories_value"]
+			self.train[int(command["train_number"])].f4 = bool(command["accessories_value"])
 
 		elif command["train_command"] == "fl":
-			self.train[int(command["train_number"])].fl = command["accessories_value"]
+			self.train[int(command["train_number"])].fl = bool(command["accessories_value"])
 
 
 
