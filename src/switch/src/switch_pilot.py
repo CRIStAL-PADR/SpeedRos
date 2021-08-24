@@ -65,6 +65,9 @@ class SwitchPiloteNode:
         self.switch_adress_and_command = {}
         self.biais_number_and_state = {}
 
+    def str2bool(v):
+        return v.lower() in ("true")
+
     def process_data(self, data):
         """
         Get the command in the form of a string sent by the user and transform it
@@ -103,7 +106,7 @@ class SwitchPiloteNode:
 
         if command["switch_command"] == "biais":
             self.switch[int(command["switch_number"])].biais = [int(command["biais_id"]),
-                                                            bool(command["biais_state"])]
+                                                            self.str2bool(command["biais_state"])]
 
         if command["switch_command"] == "biais_info":
             print(self.switch[int(command["switch_number"])].biais)

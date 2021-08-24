@@ -61,6 +61,9 @@ class TrainPiloteNode:
 		for i in range(start, numbof_train):
 			self.train[i] = Train("DCC"+str(i), i)
 
+	def str2bool(v):
+  		return v.lower() in ("true")
+
 	def process_data(self, data):
 		"""
         Get the command in the form of a string sent by the user and transform it
@@ -107,19 +110,19 @@ class TrainPiloteNode:
 			self.train[int(command["train_number"])].reverse()
 
 		elif command["train_command"] == "f1":
-			self.train[int(command["train_number"])].f1 = bool(command["accessories_value"])
+			self.train[int(command["train_number"])].f1 = self.str2bool(command["accessories_value"])
 
 		elif command["train_command"] == "f2":
-			self.train[int(command["train_number"])].f2 = bool(command["accessories_value"])
+			self.train[int(command["train_number"])].f2 = self.str2bool(command["accessories_value"])
 
 		elif command["train_command"] == "f3":
-			self.train[int(command["train_number"])].f3 = bool(command["accessories_value"])
+			self.train[int(command["train_number"])].f3 = self.str2bool(command["accessories_value"])
 
 		elif command["train_command"] == "f4":
-			self.train[int(command["train_number"])].f4 = bool(command["accessories_value"])
+			self.train[int(command["train_number"])].f4 = self.str2bool(command["accessories_value"])
 
 		elif command["train_command"] == "fl":
-			self.train[int(command["train_number"])].fl = bool(command["accessories_value"])
+			self.train[int(command["train_number"])].fl = self.str2bool(command["accessories_value"])
 
 
 
