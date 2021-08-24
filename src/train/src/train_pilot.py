@@ -100,7 +100,7 @@ class TrainPiloteNode:
 		elif command["train_command"] == "slower":
 			self.train[int(command["train_number"])].slower()
 
-		elif command["train_command"] == "speed" and self.data.speed_value !=0:
+		elif command["train_command"] == "speed":
 			self.train[int(command["train_number"])].speed = int(command["speed_value"])
 
 		elif command["train_command"] == "reverse":
