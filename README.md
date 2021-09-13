@@ -105,6 +105,18 @@ For the biais method here is the command:
 
 To print information about the switch her is the command : 
  >>> rostopic pub /switch/command std_msgs/String " data : 'switch_command : biais_info; switch_number : 6' "
+## Controlling T-Quad using ROS
+You must install and configure the T-quad beforehand. To do this, follow the installation guide:
+
+Installation Guide : [Here](https://github.com/CRIStAL-PADR/SpeedRos/tree/master/src/tquad#installation_guide)
+
+If you want to control the T-quad with the keyboard keys, open a terminal and run the following command :
+
+    roslaunch tquad tquad_teleop.launch
+
+If you want to control the tquad with a rosbridge client, open a terminal and run the following command :
+
+    roslaunch tquad tquad_bridge.launch
 
 ## For the debugging
 Usually we can use the tab to help us enter the ros command lines.
