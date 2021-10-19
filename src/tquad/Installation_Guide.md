@@ -42,7 +42,7 @@ Before downloading the ros tquad package, you must create a ros workspace.
 Once done copy and paste the tquad package into the *src* folder of your
 workspace and build it again with catkin.
 
-:note: Before continue if you have not do [this section](https://github.com/CRIStAL-PADR/SpeedRos#building-a-speedros-workspace-and-sourcing-the-setup-file)
+:exclamation: Before continue if you have not do [this section](https://github.com/CRIStAL-PADR/SpeedRos#building-a-speedros-workspace-and-sourcing-the-setup-file)
 please go and check before continue
 
 
