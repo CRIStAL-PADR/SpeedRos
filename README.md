@@ -1,38 +1,66 @@
+
 # SpeedRos
+
 An API to control speed devices using ROS
 
-SpeedRos offers us the possibility to control miniature devices like Faller (c) Crane, DCC trains or Switches using ROS
+SpeedRos offers us the possibility to control miniature devices like Faller (c)
+Crane, DCC trains or Switches using ROS
 
 Software requirements
 ---------------------
- * Ubuntu mate
- * Python >= 3.6
- * `bitstring` module [details](https://pypi.python.org/pypi/bitstring/3.1.3). Should be auto-fetched when installing with pip.
- * `wiringPi`: download and install [wiringPi](http://wiringpi.com/download-and-install/)
- * `Speedlib`: download and install [Speedlib](https://cristal-padrspeed.readthedocs.io/en/latest/documentation.html#installation)
- * Since `wiringPi` uses low-level mechanisms to access pins, dccpi programs **must be run as root**
- * `ROS` : Install [ROS](http://wiki.ros.org/ROS/Installation)
 
+* Ubuntu mate
+* Python >= 3.6
+* `bitstring` module [details](https://pypi.python.org/pypi/bitstring/3.1.3). Should be auto-fetched when installing with pip.
+* `wiringPi`: download and install [wiringPi](http://wiringpi.com/download-and-install/)
+* `Speedlib`: download and install [Speedlib](https://cristal-padrspeed.readthedocs.io/en/latest/documentation.html#installation)
+* Since `wiringPi` uses low-level mechanisms to access pins,
+dccpi programs **must be run as root**
+* `ROS` : Install [ROS](http://wiki.ros.org/ROS/Installation)
 
 Hardware requirements
 ---------------------
- * Same for speedlib see : [speedlib Hardware requirements](https://cristal-padrspeed.readthedocs.io/en/latest/documentation.html#hardware-requirements)
+
+* Same for speedlib see : [speedlib Hardware requirements](https://cristal-padrspeed.readthedocs.io/en/latest/documentation.html#hardware-requirements)
+* Added to that we will need a Tquad
 
 Building a SpeedRos workspace and sourcing the setup file
 -------------------------------------------------------
- * Knowing how to use ROS
 
-Before starting, it is imperative to create a local working directory in which to clone the remote repository of [SpeedROS](https://github.com/CRIStAL-PADR/SpeedRos) .
+* Knowing how to use ROS
+
+Before starting, it is imperative to create a local working directory in which
+to clone the remote repository of [SpeedROS](https://github.com/CRIStAL-PADR/SpeedRos).
+
+Once this is done, the tquad directory must be moved to
+the raspberry which is on the tquad.
+This means that we will have two working repertoires. The working directory
+**SpeedRos** which will contain the **train**, **switch** and
+**crane** and a second directory that we will have to move in the raspberry and
+which will contain the **tquad**
+
+
+:warning: **This step must be respected otherwise the `catkin_make` command will**
+**generate errors.**: Be very careful here!
+
 Once it's done, you have to build the packages in the SpeedRos workspace :
- * $ cd ~/.../SpeedRos
- * $ catkin_make
-Once the workspace was built, it created a similar structure in the devel subfolder which you usually find under / opt / ros / $ ROSDISTRO_NAME
 
-To add the workspace to your ROS environment you need to source the generated setup file:
- * $ source ~/.../SpeedRos/devel/setup.bash
+* $ cd ~/../SpeedRos
+* $ `catkin_make`
 
-It should be noted that this will only work for cranes. In order to correctly source the generated setup file, because of the *wiringPi* used to control the trains and the switches, you must be in sudo :
- * $ sudo su
+Once the workspace was built, it created a similar structure in the devel
+subfolder which you usually find under / opt / ros / $ ROSDISTRO_NAME
+
+To add the workspace to your ROS environment you need to source the generated
+setup file:
+
+* $ source ~/.../SpeedRos/devel/setup.bash
+
+It should be noted that this will only work for cranes. In order to correctly
+source the generated setup file, because of the *wiringPi* used to control the
+trains and the switches, you must be in sudo :
+
+* $ sudo su
 
 Once it's done we can now control our devices
 
@@ -100,15 +128,19 @@ Open a third terminal and run the following command:
  * rostopic pub /switch/command std_msgs/String " data : '' "
 
 #### Example
+
 For the biais method here is the command:
  >>> rostopic pub /switch/command std_msgs/String " data : 'switch_command : biais; switch_number : 6; biais_id : 1; biais_state : True' "
 
-To print information about the switch her is the command : 
+To print information about the switch her is the command :
+
  >>> rostopic pub /switch/command std_msgs/String " data : 'switch_command : biais_info; switch_number : 6' "
+
 ## Controlling T-Quad using ROS
+
 You must install and configure the T-quad beforehand. To do this, follow the installation guide:
 
-Installation Guide : [Here](https://github.com/CRIStAL-PADR/SpeedRos/tree/master/src/tquad#installation_guide)
+Installation Guide : [Installation guid](https://github.com/CRIStAL-PADR/SpeedRos/blob/master/src/tquad/Installation_Guide.md)
 
 If you want to control the T-quad with the keyboard keys, open a terminal and run the following command :
 
