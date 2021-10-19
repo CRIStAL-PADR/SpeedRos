@@ -40,7 +40,7 @@ This means that we will have two working spaces. The working space
 **crane** and a second one that we will have to move in the **tquad's** raspberry
 
 :warning: **This step must be respected otherwise the `catkin_make` command will**
-**generate errors.**: Be very careful here!
+**generate errors.**
 
 Once it's done, you have to build the packages in the SpeedRos workspace :
 
@@ -162,9 +162,7 @@ To print information about the switch her is the command :
 ## Controlling T-Quad using ROS
 
 You must install and configure the T-quad beforehand. To do this,
-follow the `installation guide`:
-
-Installation Guide : [Installation guid](https://github.com/CRIStAL-PADR/SpeedRos/blob/master/src/tquad/Installation_Guide.md)
+follow the `installation guide`: [Installation guide](https://github.com/CRIStAL-PADR/SpeedRos/blob/master/src/tquad/Installation_Guide.md)
 
 If you want to control the T-quad with the keyboard keys, open a terminal and  
 run the following command:
