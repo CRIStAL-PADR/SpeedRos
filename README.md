@@ -97,7 +97,7 @@ the switch because of the *wiringPiSetup*
 
 * sudo su
 
-Il est également indispendable de sourcer le setup file
+It is also essential to source the configuration file
 (see *Building a SpeedRos workspace and sourcing the setup file*)
 
 ### Train
@@ -108,20 +108,20 @@ Open a terminal and run the following command:
 
 Open a second terminal and run the following command:
 
-*rosrun train train_pilotpy 8 3
+* rosrun train `train_pilotpy` 8 3
 
 The first parameter is the number of train that we want to initialize.
 The second parameter designates the address or number of the first train to be initialized
 
 Open a third terminal and run the following command:
 
-* rostopic pub /train/command std_msgs/String " data : '' "
+* rostopic pub /train/command `std_msgs/String` " data : '' "
 
 #### Example
 
 For the faster method here is the command:
- >>> rostopic pub /train/command std_msgs/String " data :
-'train_command : faster: `train_number` : 3'
+ >>> rostopic pub /train/command `std_msgs/String` " data :
+'`train_command` : faster: `train_number : 3'
 
 For the speed methode here is the command :
  >>> rostopic pub /train/command std_msgs/String " data :
@@ -146,18 +146,18 @@ The second parameter designates the address or number of the first switch to be 
 
 Open a third terminal and run the following command:
 
-* rostopic pub /switch/command `std_msgs/String " data : '' "`
+* rostopic pub /switch/command `std_msgs/String` " data : '' "`
 
 #### Example
 
 For the biais method here is the command:
- >>> rostopic pub /switch/command std_msgs/String " data :
-'switch_command : biais; switch_number : 6; biais_id : 1; biais_state : True' "
+ >>> rostopic pub /switch/command `std_msgs/String` " data :
+'`switch_command` : biais; `switch_number` : 6; `biais_id` : 1; `biais_state` : True' "
 
 To print information about the switch her is the command :
 
- >>> rostopic pub /switch/command std_msgs/String " data :
-'switch_command : biais_info; switch_number : 6' "
+ >>> rostopic pub /switch/command `std_msgs/String` " data :
+'`switch_command` : `biais_info`; `switch_number` : 6' "
 
 ## Controlling T-Quad using ROS
 
