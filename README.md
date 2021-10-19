@@ -11,7 +11,8 @@ Software requirements
 
 * Ubuntu mate
 * Python >= 3.6
-* `bitstring` module [details](https://pypi.python.org/pypi/bitstring/3.1.3). Should be auto-fetched when installing with pip.
+* `bitstring` module [details](https://pypi.python.org/pypi/bitstring/3.1.3). 
+Should be auto-fetched when installing with pip.
 * `wiringPi`: download and install [wiringPi](http://wiringpi.com/download-and-install/)
 * `Speedlib`: download and install [Speedlib](https://cristal-padrspeed.readthedocs.io/en/latest/documentation.html#installation)
 * Since `wiringPi` uses low-level mechanisms to access pins,
@@ -34,10 +35,9 @@ to clone the remote repository of [SpeedROS](https://github.com/CRIStAL-PADR/Spe
 
 Once this is done, the tquad directory must be moved to
 the raspberry which is on the tquad.
-This means that we will have two working repertoires. The working directory
+This means that we will have two working spaces. The working space
 **SpeedRos** which will contain the **train**, **switch** and
-**crane** and a second directory that we will have to move in the raspberry and
-which will contain the **tquad**
+**crane** and a second one that we will have to move in the **tquad's** raspberry
 
 
 :warning: **This step must be respected otherwise the `catkin_make` command will**
@@ -68,35 +68,48 @@ Once it's done we can now control our devices
 
 You must first check that you are connected to the faller's wifi.
 
-Open a terminal and run the following command: 
- * roscore
+Open a terminal and run the following command:
 
-Open a second terminal and run the following command: 
- * rosrun crane crane_pilotpy "172.17.217.217"
+* roscore
 
-Open a third terminal and run the following command: 
- * rostopic pub /crane/command std_msgs/String " data : '' "
+Open a second terminal and run the following command:
+
+* rosrun crane `crane_pilot.py` "172.17.217.217"
+
+Open a third terminal and run the following command:
+
+* rostopic pub /crane/command `std_msgs`/String " data : '' "
 
 ### Example
-For the start_for method here is the command:
- >>> rostopic pub /crane/command std_msgs/String " data : ' crane_command : start_for; value : 5; motors_name : MotorChassis; motors_direction : MotorDirectionForward' "
 
-For the set_speed method here is the command: : 
- >>> rostopic pub /crane/command std_msgs/String " data : ' crane_command : set_speed; speed_value : 5; motors_name : MotorChassis' "
+For the `start_for` method here is the command:
+ >>> rostopic pub /crane/command `std_msgs/String` " data :
+'`crane_command` : `start_for`; value : 5;
+`motors_name` : MotorChassis; `motors_direction` : MotorDirectionForward' "
+
+For the `set_speed` method here is the command:
+ >>> rostopic pub /crane/command `std_msgs/String` " data :
+'`crane_command` : `set_speed`; `speed_value` : 5; `motors_name` : MotorChassis'"
 
 ## Controlling a DCC train and switch model
 
-You must first be an administrator to be able to control the train or the switch because of the *wiringPiSetup*
- * sudo su
+You must first be an administrator to be able to control the train or
+the switch because of the *wiringPiSetup*
 
-Il est également indispendable de sourcer le setup file (see *Building a SpeedRos workspace and sourcing the setup file*)
+* sudo su
+
+Il est également indispendable de sourcer le setup file
+(see *Building a SpeedRos workspace and sourcing the setup file*)
 
 ### Train
-Open a terminal and run the following command: 
- * roscore
 
-Open a second terminal and run the following command: 
- * rosrun train train_pilotpy 8 3
+Open a terminal and run the following command:
+
+* roscore
+
+Open a second terminal and run the following command:
+
+*rosrun train train_pilotpy 8 3
 
 The first parameter is the number of train that we want to initialize.
 The second parameter designates the address or number of the first train to be initialized
